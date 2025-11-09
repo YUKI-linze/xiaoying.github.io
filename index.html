@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>表白代码</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      overflow: hidden;
+      background-size: cover;
+      background-repeat: no-repeat;
+      transition: all 1s ease;
+    }
+    .text-item {
+      position: absolute;
+      color: #e91e63;
+      font-size: 16px;
+      font-weight: bold;
+      opacity: 0;
+      animation: float 8s linear infinite;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    }
+    @keyframes float {
+      0% {
+        opacity: 0;
+        transform: translateY(100vh) scale(0.5);
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-100vh) scale(1.5);
+      }
+    }
+    .confirm-page {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .confirm-btn {
+      padding: 10px 20px;
+      background: #e91e63;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .audio-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #e91e63;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 100;
+    }
+  </style>
+</head>
+<body>
+  <!-- 首页确认页 -->
+  <div class="confirm-page" id="confirmPage">
+    <h2>准备好接收我的心意了吗？</h2>
+    <button class="confirm-btn" id="confirmBtn">确定</button>
+  </div>
+
+  <div class="audio-btn" id="audioBtn">🎵</div>
+  <audio id="bgMusic" preload="auto">
+    <source src="https://cunchuyinyue.oss-cn-guangzhou.aliyuncs.com/ockqAalIpRIbGAVOEeAITmJLeeAa4FYGBGECAF%20%281%29.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // 自定义背景图片地址
+    const backgroundImage = "https://cunchuyinyue.oss-cn-guangzhou.aliyuncs.com/80b84c8b7672862077a401c64334da47.jpg";
+
+    // 表白文字库
+    const loveTexts = [
+      "你在身边 在你身边",
+      "亲爱的陈楚滢",
+      "I love you",
+      "我喜欢你",
+      "长日欢喜 四季与你",
+      "好好吃饭",
+      "多喝水",
+      "我想你了",
+    
+    "😘 天气冷了，我很想你",
+    "😊 保持好心情",
+    "🍚 按时吃饭",
+    "❤️ 早点休息",
+    "😜 别熬夜哦",
+    "😊 要开心呀",
+    "❤️ 想你啦",
+    "😋 多吃点好吃的",
+    "😊 照顾好自己",
+    "❤️ 陈楚滢",
+    "😝 要幸福哦",
+    "😊 每天都要快乐",
+    "❤️ 记得想我",
+    "😊 保持微笑",
+    "❤️ 注意身体",
+    "😛 要加油呀",
+    "😊 一切安好",
+    "❤️ 我在想你",
+    "😊 天天开心",
+    "❤️ 好好吃饭",
+    "😚 别太累了",
+    "😊 保持可爱",
+    "❤️ 照顾好自己",
+    "😝 要幸福哦",
+    "😊 事事顺心",
+    "❤️ 想你每一天",
+    "😊 快乐每一天",
+    "❤️ 按时睡觉",
+    "😜 别偷懒哦",
+    "😊 要幸福呀",
+    "❤️ 记得爱自己",
+    "😋 多喝热水",
+    "😊 保持乐观",
+    "❤️ 我很想你",
+    "😝 要努力哦",
+    "😊 一切顺利",
+    "❤️ 好好生活",
+    "😚 别担心哦",
+    "😊 幸福每一天",
+    "❤️ 陈楚滢！",
+    "😊 陈楚滢金榜题名！",
+    "😚 记得吃饭",
+    ];
+
+    // 首页确认按钮逻辑
+    const confirmPage = document.getElementById("confirmPage");
+    const confirmBtn = document.getElementById("confirmBtn");
+    const bgMusic = document.getElementById("bgMusic");
+    confirmBtn.onclick = () => {
+      confirmPage.style.display = "none";
+      document.body.style.backgroundImage = `url(${backgroundImage})`;
+      startAnimation();
+      // 确认后自动播放音乐
+      bgMusic.play().catch(err => {
+        console.log("音乐自动播放失败，可能是浏览器限制，请手动点击音乐按钮播放：", err);
+      });
+      audioBtn.textContent = "⏸️";
+    };
+
+    // 生成漂浮文字
+    function createFloatingText() {
+      const textEl = document.createElement("div");
+      textEl.className = "text-item";
+      textEl.textContent = loveTexts[Math.floor(Math.random() * loveTexts.length)];
+      textEl.style.left = `${Math.random() * 100}vw`;
+      textEl.style.animationDelay = `${Math.random() * 3}s`;
+      textEl.style.animationDuration = `${5 + Math.random() * 5}s`;
+      document.body.appendChild(textEl);
+
+      // 文字消失后移除元素
+      setTimeout(() => {
+        textEl.remove();
+      }, 8000);
+    }
+
+    // 启动动画
+    function startAnimation() {
+      setInterval(createFloatingText, 200);
+    }
+
+    // 音乐控制
+    const audioBtn = document.getElementById("audioBtn");
+    audioBtn.onclick = () => {
+      if (bgMusic.paused) {
+        bgMusic.play();
+        audioBtn.textContent = "⏸️";
+      } else {
+        bgMusic.bgMusic.pause();
+        audioBtn.textContent = "🎵";
+      }
+    };
+  </script>
+</body>
+</html>
